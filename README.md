@@ -6,3 +6,6 @@ The way you are 'supposed' to backup zVols is to use zfs replication, using `zfs
 
 This is a small script that mounts two zVols which are iSCSI targets, then mirrors them using `dd`. This requires making the zVols accessable through iSCSI, and writing a valid iSCSI configuration on the host. It does some checking to make sure that no-one else has mounted the iSCSI shares at the time the backup starts, which requires SSH access through a key to the NAS host.
 
+This method is obviously *much* slower than using ZFS replication but speed is not important for me.
+
+An alternative method would be to make a clonezilla VM on the NAS host, pass through the zVols as disks into the clonezilla VM, and mirror it that way. That'd probably be a lot faster since it doesn't have the iSCSI overhead. However you couldn't easily do this backup as a cronjob. I could'nt do it like this (I blame the rubbish bhyve FreeBSD hypervisor)...
